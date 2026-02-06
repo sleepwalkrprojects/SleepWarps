@@ -1,65 +1,49 @@
 # SleepWarps
 
-A lightweight and intuitive warp management plugin for Minecraft servers featuring a clean GUI interface for effortless teleportation.
+A lightweight warp management plugin for Minecraft servers with a clean GUI interface for teleportation.
 
-## 🎯 Core Features
+## Core Features
 
-- **Interactive GUI Menu**: Click-based warp selection using an inventory interface
-- **Direct Teleportation**: Quick warp access via command without opening the GUI
-- **Persistent Storage**: All warps automatically saved to YAML with full location data
-- **Multi-World Support**: Create warps across different worlds with proper world tracking
-- **Direction Preservation**: Saves player's viewing direction (yaw/pitch) for precise teleportation
-- **Permission System**: Granular control over who can use, create, and delete warps
+- Interactive GUI menu with click-based warp selection
+- Direct teleportation via command
+- Persistent YAML storage with full location data
+- Multi-world support
+- Direction preservation (yaw/pitch)
+- Granular permission system
 
-## 📋 Installation
+## Installation
 
-1. Download the latest release from the [Releases](../../releases) page
-2. Place `WarpPlugin-1.0.jar` in your server's `plugins/` folder
-3. Restart your server
-4. Warps will be stored in `plugins/WarpPlugin/warps.yml`
+1. Download the latest release
+2. Place `WarpPlugin-1.0.jar` in `plugins/` folder
+3. Restart server
+4. Warps stored in `plugins/WarpPlugin/warps.yml`
 
-## 🎮 Commands
+## Commands
 
 | Command | Description | Permission |
 |---------|-------------|------------|
-| `/warp` | Opens the warp GUI menu | `warp.use` |
-| `/warp <name>` | Teleports directly to the specified warp | `warp.use` |
-| `/setwarp <name>` | Creates a new warp at your current location | `warp.set` |
-| `/delwarp <name>` | Deletes an existing warp | `warp.delete` |
+| `/warp` | Opens warp GUI | `warp.use` |
+| `/warp <name>` | Teleports to warp | `warp.use` |
+| `/setwarp <name>` | Creates warp | `warp.set` |
+| `/delwarp <name>` | Deletes warp | `warp.delete` |
 
 **Aliases**: `/warps` for `/warp`
 
-## 🔐 Permissions
+## Permissions
 
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `warp.use` | Allows using warps | `true` |
-| `warp.set` | Allows creating warps | `op` |
-| `warp.delete` | Allows deleting warps | `op` |
+| `warp.use` | Use warps | `true` |
+| `warp.set` | Create warps | `op` |
+| `warp.delete` | Delete warps | `op` |
 
-## 🎨 GUI Interface
+## GUI Interface
 
-The warp menu displays all available warps as **Ender Pearls** in a 27-slot inventory (3 rows):
+Warps display as Ender Pearls in a 27-slot inventory. Click to teleport instantly.
 
-- **Item**: Ender Pearl with custom name
-- **Display Name**: Warp name in gold text
-- **Lore**: "Click to warp!" in gray text
-- **Click Action**: Instant teleportation to warp location
+## Data Storage
 
-Example GUI display:
-```
-╔═══════════════════════════════╗
-║        🌀 Warps               ║
-╠═══════════════════════════════╣
-║ [spawn]  [shop]   [pvp]       ║
-║ [nether] [end]    [farm]      ║
-║                               ║
-╚═══════════════════════════════╝
-```
-
-## 📁 Data Storage
-
-Warps are stored in `plugins/WarpPlugin/warps.yml`:
+Warps stored in `plugins/WarpPlugin/warps.yml`:
 
 ```yaml
 spawn:
@@ -69,54 +53,13 @@ spawn:
   z: -200.5
   yaw: 90.0
   pitch: 0.0
-  
-shop:
-  world: world
-  x: -450.3
-  y: 70.0
-  z: 890.7
-  yaw: 180.0
-  pitch: -15.0
 ```
 
-### Storage Details
+All warps save immediately and load automatically on server start.
 
-- **Automatic Saving**: Warps save immediately upon creation/deletion
-- **World Tracking**: Each warp stores its world name for multi-world compatibility
-- **Precision Coordinates**: X, Y, Z stored as doubles for exact positioning
-- **View Direction**: Yaw and pitch preserved for consistent player orientation
-- **Load on Startup**: All warps automatically loaded when server starts
+## Building from Source
 
-## 💡 How It Works
-
-### Warp Creation Process
-
-1. **Player Command**: Admin runs `/setwarp <name>` at desired location
-2. **Data Capture**: Plugin records:
-   - Current world name
-   - Precise X, Y, Z coordinates
-   - Player's yaw (horizontal rotation)
-   - Player's pitch (vertical rotation)
-3. **Storage**: Warp saved to `warps.yml` immediately
-4. **Confirmation**: Player receives success message
-
-### Teleportation Process
-
-1. **GUI Access**: Player runs `/warp` command
-2. **Menu Display**: Inventory opens with all warps as clickable items
-3. **Selection**: Player clicks desired warp's Ender Pearl
-4. **Validation**: Plugin verifies warp still exists and world is loaded
-5. **Teleport**: Player instantly moved to exact warp coordinates with preserved view direction
-6. **Feedback**: Success message displayed, inventory closed
-
-## 🔧 Building from Source
-
-### Prerequisites
-
-- Java 17 or higher
-- Maven 3.6+
-
-### Build Steps
+Requires Java 17+ and Maven 3.6+
 
 ```bash
 git clone https://github.com/yourusername/WarpPlugin.git
@@ -124,71 +67,49 @@ cd WarpPlugin
 mvn clean package
 ```
 
-The compiled JAR will be in `target/WarpPlugin-1.0.jar`
+Output: `target/WarpPlugin-1.0.jar`
 
-## ⚙️ Compatibility
+## Compatibility
 
-- **Minecraft Version**: 1.19.4+
-- **Server Software**: Spigot, Paper, Purpur
-- **Java Version**: 17+
+- **Minecraft**: 1.19.4+
+- **Server**: Spigot, Paper, Purpur
+- **Java**: 17+
 
-Tested and working on Paper 1.19.4, should be compatible with newer versions.
+## Examples
 
-## 📝 Examples
-
-### Creating a Spawn Warp
 ```
 > /setwarp spawn
-✓ Warp 'spawn' has been set!
-```
+Warp 'spawn' has been set!
 
-### Using the GUI
-```
 > /warp
-[Opens inventory with all warps]
-[Click "spawn" ender pearl]
-✓ Warped to spawn!
-```
+[Opens GUI with all warps]
 
-### Direct Teleportation
-```
 > /warp spawn
-✓ Warped to spawn!
+Warped to spawn!
+
+> /delwarp noah
+Warp 'noah' has been deleted!
 ```
 
-### Deleting a Warp
-```
-> /delwarp old_location
-✓ Warp 'old_location' has been deleted!
-```
+## Known Limitations
 
-## 🐛 Known Limitations
+- Maximum 27 warps in GUI (no pagination)
+- No warp categories
+- Direct commands work beyond 27 warps
 
-- **GUI Capacity**: Maximum 27 warps displayed in the GUI
-- **No Pagination**: Warps beyond 27 won't appear in the menu (direct teleport still works)
-- **No Categories**: All warps shown in a single list
+## License
 
-For larger servers requiring more warps, consider implementing pagination or using direct teleportation commands.
+Open source. Modify and distribute freely.
 
-## 📄 License
+## Contributing
 
-This project is open source. Feel free to modify, distribute, and use it on your server. No attribution required, but appreciated.
+Contributions welcome via issues and pull requests.
+ests.
 
-## 🤝 Contributing
+## Support
 
-Contributions are welcome! Feel free to:
-- Report bugs via Issues
-- Submit pull requests with improvements
-- Suggest new features
-
-## ⚠️ Support
-
-If you encounter issues:
-1. Verify you're using Minecraft 1.19.4 or newer
-2. Ensure Java 17+ is installed
-3. Check console for error messages
-4. Open an issue with full error details
+For issues, verify Minecraft 1.19.4+ and Java 17+, then check console errors.
 
 ---
 
-Made for Minecraft server owners who want simple, reliable warp functionality.
+Simple, reliable warp functionality for Minecraft servers.
